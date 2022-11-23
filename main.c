@@ -33,11 +33,53 @@ void esperar(void){
     limpaTela();
 }
 
+void menu(void){
+    int opcao = 0;
+    while (opcao != 5){
+        limpaTela();
+        printf("1 - Adicionar um carro na fila;\n");
+        printf("2 - Abastecimento;\n");
+        printf("3 - Exibir carros na fila de espera;\n");
+        printf("4 - Relatórios;\n");
+        printf("5 - Encerrar.\n");
+        printf("Informe opção:");
+        scanf("%d", &opcao);
+        switch (opcao) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+}
 int main() {
     //inicialização
     setlocale(LC_ALL, "Portuguese");
+    //vars
+    int filaTamanhoMaximo = 0;
+    float preco = 0.0;
+
+    printf("\ninforme valor da Gasolina:");
+    scanf("%f",&preco);
+    printf("informe tamanho maximo da fila:");
+    scanf("%d", &filaTamanhoMaximo);
+
     printf("Autor: João Victor Lima!\n");
     esperar();
+
+
     //inicio principal
+    menu();
     return 0;
 }
