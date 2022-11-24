@@ -57,6 +57,7 @@ int main() {
     int tamanhoVariavelFila = 1;
     int filaTamanhoMaximo = 0;
     float litrosVendidos = 0;
+    float vendaEsperando = 0;
     float preco = 0.0;
     float bomba = 200.00;
     struct TCarro *fila;
@@ -84,7 +85,7 @@ int main() {
         printf("2 - Abastecimento;\n");
         printf("3 - Exibir carros na fila de espera;\n");
         printf("4 - Relatórios;\n");
-        printf("5 - encher bomba\n")
+        printf("5 - encher bomba\n");
         printf("6 - Encerrar.\n");
         printf("Informe opção:");
 
@@ -108,8 +109,18 @@ int main() {
                     fgets(fila[contadorFila-1].placa,7,stdin);
                     printf("informe modelo do carro:");
                     fgets(fila[contadorFila-1].modelo,50,stdin);
+
                     printf("informe quantidade a ser abastecida:");
                     scanf("%f",&fila[contadorFila-1].litros);
+                        while (fila[contadorFila-1].litros > (bomba - vendaEsperando) || fila[contadorFila-1].litros <= 0){
+                            printf("quantidade informada invalida\n");
+                            printf("bomba: %.2f L\n",bomba);
+                            printf("fila de espera: %.2f L\n",vendaEsperando);
+                            printf("total disponivel %.2f L\n", bomba - vendaEsperando);
+                            printf("\ninforme quantidade a ser abastecida:");
+                            scanf("%f",&fila[contadorFila-1].litros);
+                        }
+                        vendaEsperando = vendaEsperando + fila[contadorFila-1].litros;
 
                     limpaTela();
                     printf("carro adiconado");
@@ -130,6 +141,8 @@ int main() {
                     strcpy(atendidos[carrosAtendidos].modelo , fila[0].modelo);
                     litrosVendidos = litrosVendidos + fila[0].litros;
                     atendidos[carrosAtendidos].litros = fila[0].litros;
+                    bomba = bomba - atendidos[carrosAtendidos].litros;
+                    vendaEsperando = vendaEsperando - atendidos[carrosAtendidos].litros;
                     carrosAtendidos++;
                     contadorFila--;
                     //inicia reorganização
@@ -143,6 +156,8 @@ int main() {
                         }
                     }
                 }
+                limpaTela();
+                printf("Carro Abastecido");
                 flush_in();
                 esperar();
                 break;
