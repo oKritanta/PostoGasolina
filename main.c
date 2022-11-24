@@ -139,6 +139,21 @@ int main() {
                 esperar();
                 break;
             case 3:
+                if(contadorFila == 0){
+                    printf("Não há carros na fila");
+                } else{
+                    limpaTela();
+                    for (int i = 0; i < contadorFila; ++i) {
+                        printf("carro %d:\n",i+1);
+                        printf("cor: %s",fila[i].cor);
+                        printf("placa: %s",fila[i].placa);
+                        printf("modelo: %s",fila[i].modelo);
+                        printf("litros: %.2f",fila[i].litros);
+                        printf("\n\n");
+                    }
+                }
+                flush_in();
+                esperar();
                 break;
             case 4:
                 break;
