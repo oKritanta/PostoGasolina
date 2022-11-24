@@ -44,7 +44,6 @@ void esperar(void){
     flush_in();
     limpaTela();
 }
-
 int main() {
     //inicialização
     setlocale(LC_ALL, "Portuguese");
@@ -70,7 +69,7 @@ int main() {
     atendidos = (struct TCarro *) malloc(1 * sizeof (struct TCarro));
 
     if (fila == NULL) {
-        printf("Erro de alocacao");
+        printf(RED"Erro de alocacao"RESET);
         exit(1);
     }
 
@@ -79,7 +78,7 @@ int main() {
 
     //inicio principal
 
-    while (opcao != 5){
+    while (opcao != 6){
         limpaTela();
         printf("1 - Adicionar um carro na fila;\n");
         printf("2 - Abastecimento;\n");
@@ -94,7 +93,7 @@ int main() {
             case 1:
                 limpaTela();
                 if(contadorFila >= filaTamanhoMaximo){
-                    printf("Fila Cheia");
+                    printf(RED"Fila Cheia"RESET);
                 } else {
                     contadorFila++;
                     if(contadorFila > tamanhoVariavelFila){
@@ -113,7 +112,7 @@ int main() {
                     printf("informe quantidade a ser abastecida:");
                     scanf("%f",&fila[contadorFila-1].litros);
                         while (fila[contadorFila-1].litros > (bomba - vendaEsperando) || fila[contadorFila-1].litros <= 0){
-                            printf("quantidade informada invalida\n");
+                            printf(RED"quantidade informada invalida\n"RESET);
                             printf("bomba: %.2f L\n",bomba);
                             printf("fila de espera: %.2f L\n",vendaEsperando);
                             printf("total disponivel %.2f L\n", bomba - vendaEsperando);
@@ -123,15 +122,16 @@ int main() {
                         vendaEsperando = vendaEsperando + fila[contadorFila-1].litros;
 
                     limpaTela();
-                    printf("carro adiconado");
+                    printf(GREEN"carro adiconado"RESET);
                 }
                 esperar();
                 break;
             case 2:
+                limpaTela();
                 if(contadorFila <= 0){
                     //caso seja menor
                     contadorFila = 0;
-                    printf("Não ha carros na fila de espera");
+                    printf(YELLOW "Não há carros na fila de espera" RESET);
                 } else{
                     if(carrosAtendidos != 0){
                         atendidos = (struct TCarro *) realloc(fila, (carrosAtendidos + 1) * sizeof (struct  TCarro));
@@ -155,15 +155,15 @@ int main() {
                             fila[i].litros = fila[i+1].litros;
                         }
                     }
+                    printf(GREEN"Carro Abastecido"RESET);
                 }
-                limpaTela();
-                printf("Carro Abastecido");
+
                 flush_in();
                 esperar();
                 break;
             case 3:
                 if(contadorFila == 0){
-                    printf("Não há carros na fila");
+                    printf(YELLOW"Não há carros na fila"RESET);
                 } else{
                     limpaTela();
                     for (int i = 0; i < contadorFila; ++i) {
@@ -257,7 +257,6 @@ int main() {
                 break;
             case 6:
                 printf("Saindo...");
-                return 0;
                 break;
             default:
                 printf("Opção invalida, tente novamente");
