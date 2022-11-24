@@ -58,6 +58,7 @@ int main() {
     int filaTamanhoMaximo = 0;
     float litrosVendidos = 0;
     float preco = 0.0;
+    float bomba = 200.00;
     struct TCarro *fila;
     printf("\ninforme valor da Gasolina:");
     scanf("%f",&preco);
@@ -83,7 +84,8 @@ int main() {
         printf("2 - Abastecimento;\n");
         printf("3 - Exibir carros na fila de espera;\n");
         printf("4 - Relatórios;\n");
-        printf("5 - Encerrar.\n");
+        printf("5 - encher bomba\n")
+        printf("6 - Encerrar.\n");
         printf("Informe opção:");
 
         scanf("%d", &opcao);
@@ -189,7 +191,7 @@ int main() {
                             printf("Foi Atentido %d carros",carrosAtendidos);
                             break;
                         case 'd':
-                            printf("Resta ainda %f Litros",200 - litrosVendidos);
+                            printf("Resta ainda %f Litros",bomba - litrosVendidos);
                             break;
                         case 'e':
                             printf("Arquivo com relatórios: ");
@@ -205,7 +207,7 @@ int main() {
                                         "Total de litros de combustível vendidos: %.2fL\nQuantia total "
                                         "arrecadada com as vendas: R$%.2f\nCarros atendidos: "
                                         "%d\nQuantia de combustível restante no tanque: %.2f",
-                                        litrosVendidos, litrosVendidos * preco, carrosAtendidos, 200 - litrosVendidos);
+                                        litrosVendidos, litrosVendidos * preco, carrosAtendidos, bomba - litrosVendidos);
                                 int k = 1;
                                 while (k <= carrosAtendidos) {
                                     fprintf(pont_arq,"\n\ncarro %d\n\nModelo: %sCor: %sPlaca: %slitros: %.2f\n",
@@ -235,6 +237,10 @@ int main() {
 
                 break;
             case 5:
+                bomba = 200;
+                printf("bomba reenchida");
+                break;
+            case 6:
                 printf("Saindo...");
                 return 0;
                 break;
