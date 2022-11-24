@@ -208,7 +208,8 @@ int main() {
 
                 break;
             case 5:
-
+                printf("Saindo...");
+                return 0;
                 break;
             default:
                 break;
