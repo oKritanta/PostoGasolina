@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <locale.h>
+#include <string.h>
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */
@@ -19,6 +21,13 @@
 #define BOLDCYAN "\033[1m\033[36m"    /* Bold Cyan */
 #define BOLDWHITE "\033[1m\033[37m"   /* Bold White */
 
+struct TCarro {
+    char cor[30];
+    char placa[7];
+    char modelo[50];
+};
+
+
 void flush_in() {
     int ch;
     do {
@@ -33,8 +42,29 @@ void esperar(void){
     limpaTela();
 }
 
-void menu(void){
+int main() {
+    //inicialização
+    setlocale(LC_ALL, "Portuguese");
+
+
+    //vars
     int opcao = 0;
+    int filaAtual = 0;
+    int filaTamanhoMaximo = 0;
+    float preco = 0.0;
+    struct TCarro *fila;
+    fila =(struct TCarro *) malloc(1 * sizeof (struct  TCarro));
+
+    printf("\ninforme valor da Gasolina:");
+    scanf("%f",&preco);
+    printf("informe tamanho maximo da fila:");
+    scanf("%d", &filaTamanhoMaximo);
+
+    printf("Autor: João Victor Lima!\n");
+    esperar();
+
+    //inicio principal
+
     while (opcao != 5){
         limpaTela();
         printf("1 - Adicionar um carro na fila;\n");
@@ -43,6 +73,7 @@ void menu(void){
         printf("4 - Relatórios;\n");
         printf("5 - Encerrar.\n");
         printf("Informe opção:");
+
         scanf("%d", &opcao);
         switch (opcao) {
             case 1:
@@ -61,25 +92,5 @@ void menu(void){
 
 
     }
-
-}
-int main() {
-    //inicialização
-    setlocale(LC_ALL, "Portuguese");
-    //vars
-    int filaTamanhoMaximo = 0;
-    float preco = 0.0;
-
-    printf("\ninforme valor da Gasolina:");
-    scanf("%f",&preco);
-    printf("informe tamanho maximo da fila:");
-    scanf("%d", &filaTamanhoMaximo);
-
-    printf("Autor: João Victor Lima!\n");
-    esperar();
-
-
-    //inicio principal
-    menu();
     return 0;
 }
