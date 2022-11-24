@@ -37,7 +37,7 @@ void flush_in() {
 void limpaTela(void){printf("\e[1;1H\e[2J");}
 
 void esperar(void){
-    printf("APERTE ENTER PARA CONTINUAR");
+    printf("\nAPERTE ENTER PARA CONTINUAR");
     flush_in();
     limpaTela();
 }
@@ -45,20 +45,25 @@ void esperar(void){
 int main() {
     //inicialização
     setlocale(LC_ALL, "Portuguese");
-
-
     //vars
+    struct TCarro *backup;
     int opcao = 0;
-    int filaAtual = 0;
+    int contadorFila = 0;
+    int tamanhoVariavelFila = 1;
     int filaTamanhoMaximo = 0;
     float preco = 0.0;
     struct TCarro *fila;
-    fila =(struct TCarro *) malloc(1 * sizeof (struct  TCarro));
-
     printf("\ninforme valor da Gasolina:");
     scanf("%f",&preco);
     printf("informe tamanho maximo da fila:");
     scanf("%d", &filaTamanhoMaximo);
+    //aloca espaco na memoria
+    fila = (struct TCarro *) malloc(1 * sizeof (struct TCarro));
+
+    if (fila == NULL) {
+        printf("Erro de alocacao");
+        exit(1);
+    }
 
     printf("Autor: João Victor Lima!\n");
     esperar();
@@ -77,6 +82,30 @@ int main() {
         scanf("%d", &opcao);
         switch (opcao) {
             case 1:
+                limpaTela();
+                if(contadorFila >= filaTamanhoMaximo){
+                    printf("Fila Cheia");
+                } else {
+                    contadorFila++;
+                    if(contadorFila > tamanhoVariavelFila){
+                        fila = (struct TCarro *) realloc(fila, (contadorFila + 1) * sizeof (struct  TCarro));
+                        tamanhoVariavelFila++;
+                    }
+                    //inicia recolhimento de informacoes
+                    printf("informe cor do carro:");
+                    flush_in();
+                    fgets(fila[contadorFila-1].cor,30,stdin);
+                    printf("informe placa do carro:");
+                    flush_in();
+                    fgets(fila[contadorFila-1].placa,7,stdin);
+                    printf("informe modelo do carro:");
+                    flush_in();
+                    fgets(fila[contadorFila-1].modelo,50,stdin);
+
+                    limpaTela();
+                    printf("carro adiconado");
+                }
+                esperar();
                 break;
             case 2:
                 break;
