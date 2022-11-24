@@ -25,6 +25,7 @@ struct TCarro {
     char cor[30];
     char placa[7];
     char modelo[50];
+    float litros;
 };
 
 
@@ -101,6 +102,8 @@ int main() {
                     printf("informe modelo do carro:");
                     flush_in();
                     fgets(fila[contadorFila-1].modelo,50,stdin);
+                    printf("informe quantidade a ser abastecida:");
+                    scanf("%f",&fila[contadorFila-1].litros);
 
                     limpaTela();
                     printf("carro adiconado");
