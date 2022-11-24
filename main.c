@@ -47,9 +47,10 @@ int main() {
     //inicialização
     setlocale(LC_ALL, "Portuguese");
     //vars
-    struct TCarro *backup;
+    struct TCarro *atendidos;
     int opcao = 0;
     int contadorFila = 0;
+    int carrosAtendidos = 0;
     int tamanhoVariavelFila = 1;
     int filaTamanhoMaximo = 0;
     float preco = 0.0;
@@ -60,6 +61,7 @@ int main() {
     scanf("%d", &filaTamanhoMaximo);
     //aloca espaco na memoria
     fila = (struct TCarro *) malloc(1 * sizeof (struct TCarro));
+    atendidos = (struct TCarro *) malloc(1 * sizeof (struct TCarro));
 
     if (fila == NULL) {
         printf("Erro de alocacao");
@@ -97,10 +99,8 @@ int main() {
                     flush_in();
                     fgets(fila[contadorFila-1].cor,30,stdin);
                     printf("informe placa do carro:");
-                    flush_in();
                     fgets(fila[contadorFila-1].placa,7,stdin);
                     printf("informe modelo do carro:");
-                    flush_in();
                     fgets(fila[contadorFila-1].modelo,50,stdin);
                     printf("informe quantidade a ser abastecida:");
                     scanf("%f",&fila[contadorFila-1].litros);
@@ -111,6 +111,32 @@ int main() {
                 esperar();
                 break;
             case 2:
+                if(contadorFila <= 0){
+                    //caso seja menor
+                    contadorFila = 0;
+                    printf("Não ha carros na fila de espera");
+                } else{
+                    if(carrosAtendidos != 0){
+                        atendidos = (struct TCarro *) realloc(fila, (carrosAtendidos + 1) * sizeof (struct  TCarro));
+                    }
+                    strcpy(atendidos[carrosAtendidos].cor , fila[0].cor);
+                    strcpy(atendidos[carrosAtendidos].placa , fila[0].placa);
+                    strcpy(atendidos[carrosAtendidos].modelo , fila[0].modelo);
+                    atendidos[carrosAtendidos].litros = fila[0].litros;
+                    carrosAtendidos++;
+                    contadorFila--;
+                    //inicia reorganização
+                    if(contadorFila > 0){
+                    for(int i = 0; i< contadorFila;i++){
+                    strcpy(fila[i].cor , fila[i+1].cor);
+                    strcpy(fila[i].placa , fila[i+1].placa);
+                    strcpy(fila[i].modelo , fila[i+1].modelo);
+                    fila[i].litros = fila[i+1].litros;
+                    }
+                    }
+                }
+                flush_in();
+                esperar();
                 break;
             case 3:
                 break;
