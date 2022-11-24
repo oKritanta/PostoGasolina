@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
+#include <ctype.h>
+
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m"              /* Black */
@@ -48,11 +50,13 @@ int main() {
     setlocale(LC_ALL, "Portuguese");
     //vars
     struct TCarro *atendidos;
+    char op2 = 0;
     int opcao = 0;
     int contadorFila = 0;
     int carrosAtendidos = 0;
     int tamanhoVariavelFila = 1;
     int filaTamanhoMaximo = 0;
+    float litrosVendidos = 0;
     float preco = 0.0;
     struct TCarro *fila;
     printf("\ninforme valor da Gasolina:");
@@ -122,12 +126,14 @@ int main() {
                     strcpy(atendidos[carrosAtendidos].cor , fila[0].cor);
                     strcpy(atendidos[carrosAtendidos].placa , fila[0].placa);
                     strcpy(atendidos[carrosAtendidos].modelo , fila[0].modelo);
+                    litrosVendidos = litrosVendidos + fila[0].litros;
                     atendidos[carrosAtendidos].litros = fila[0].litros;
                     carrosAtendidos++;
                     contadorFila--;
                     //inicia reorganização
                     if(contadorFila > 0){
                     for(int i = 0; i< contadorFila;i++){
+
                     strcpy(fila[i].cor , fila[i+1].cor);
                     strcpy(fila[i].placa , fila[i+1].placa);
                     strcpy(fila[i].modelo , fila[i+1].modelo);
@@ -156,8 +162,53 @@ int main() {
                 esperar();
                 break;
             case 4:
+                flush_in();
+                op2 = 0;
+                while (op2 != 'f'){
+                    limpaTela();
+                        printf("a - Quantidade de litros vendida;\nb - Valor total arrecadado com "
+                               "as vendas;\nc - Carros atendidos;\nd - Quantidade "
+                               "de "
+                               "combustível restante no tanque;\ne - Gerar arquivo para impressão "
+                               "(com todas as informações de A, B, C e D);\nf - Voltar ao menu "
+                               "anterior.\n");
+                        printf("\n");
+                        printf("Selecione a opção: ");
+                    op2 = getchar();
+                    op2 = tolower(op2);
+                    limpaTela();
+                    switch (op2) {
+                        case 'a':
+                            printf("Foi vendido: %.2f L",litrosVendidos);
+                            break;
+
+                        case 'b':
+                            printf("Foi Arrecadado: R$ %.2f",litrosVendidos * preco);
+                            break;
+                        case 'c':
+                            printf("Foi Atentido %d carros",carrosAtendidos);
+                            break;
+                        case 'd':
+                            printf("Resta ainda %f Litros",200 - litrosVendidos);
+                            break;
+                        case 'e':
+                            printf("placeholder");
+                            break;
+                        case 'f':
+                            printf("voltando...");
+                            break;
+                        default:
+                            printf("opção invalida");
+                            break;
+                    }
+                    flush_in();
+                    esperar();
+
+                }
+
                 break;
             case 5:
+
                 break;
             default:
                 break;
