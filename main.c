@@ -132,13 +132,13 @@ int main() {
                     contadorFila--;
                     //inicia reorganização
                     if(contadorFila > 0){
-                    for(int i = 0; i< contadorFila;i++){
+                        for(int i = 0; i< contadorFila;i++){
 
-                    strcpy(fila[i].cor , fila[i+1].cor);
-                    strcpy(fila[i].placa , fila[i+1].placa);
-                    strcpy(fila[i].modelo , fila[i+1].modelo);
-                    fila[i].litros = fila[i+1].litros;
-                    }
+                            strcpy(fila[i].cor , fila[i+1].cor);
+                            strcpy(fila[i].placa , fila[i+1].placa);
+                            strcpy(fila[i].modelo , fila[i+1].modelo);
+                            fila[i].litros = fila[i+1].litros;
+                        }
                     }
                 }
                 flush_in();
@@ -166,14 +166,14 @@ int main() {
                 op2 = 0;
                 while (op2 != 'f'){
                     limpaTela();
-                        printf("a - Quantidade de litros vendida;\nb - Valor total arrecadado com "
-                               "as vendas;\nc - Carros atendidos;\nd - Quantidade "
-                               "de "
-                               "combustível restante no tanque;\ne - Gerar arquivo para impressão "
-                               "(com todas as informações de A, B, C e D);\nf - Voltar ao menu "
-                               "anterior.\n");
-                        printf("\n");
-                        printf("Selecione a opção: ");
+                    printf("a - Quantidade de litros vendida;\nb - Valor total arrecadado com "
+                           "as vendas;\nc - Carros atendidos;\nd - Quantidade "
+                           "de "
+                           "combustível restante no tanque;\ne - Gerar arquivo para impressão "
+                           "(com todas as informações de A, B, C e D);\nf - Voltar ao menu "
+                           "anterior.\n");
+                    printf("\n");
+                    printf("Selecione a opção: ");
                     op2 = getchar();
                     op2 = tolower(op2);
                     limpaTela();
@@ -192,7 +192,34 @@ int main() {
                             printf("Resta ainda %f Litros",200 - litrosVendidos);
                             break;
                         case 'e':
-                            printf("placeholder");
+                            printf("Arquivo com relatórios: ");
+
+                            FILE *pont_arq = NULL;
+                            pont_arq = fopen("relatorios.txt", "w");
+                            if (pont_arq == NULL)
+                                printf("Erro ao abrir o arquivo.\n");
+                            else {
+                                printf("Arquivo criado com sucesso!\n" );
+                                fprintf(
+                                        pont_arq,
+                                        "Total de litros de combustível vendidos: %.2fL\nQuantia total "
+                                        "arrecadada com as vendas: R$%.2f\nCarros atendidos: "
+                                        "%d\nQuantia de combustível restante no tanque: %.2f",
+                                        litrosVendidos, litrosVendidos * preco, carrosAtendidos, 200 - litrosVendidos);
+                                int k = 1;
+                                while (k <= carrosAtendidos) {
+                                    fprintf(pont_arq,"\n\ncarro %d\n\nModelo: %sCor: %sPlaca: %slitros: %.2f\n",
+                                            k,
+                                            atendidos[k - 1].modelo,
+                                            atendidos[k - 1].cor,
+                                            atendidos[k - 1].placa,
+                                            atendidos[k-1].litros);
+                                    k++;
+                                }
+
+                                fclose(pont_arq);
+                            }
+                            pont_arq = fopen("relatorios.txt", "r");
                             break;
                         case 'f':
                             printf("voltando...");
@@ -212,6 +239,7 @@ int main() {
                 return 0;
                 break;
             default:
+                printf("Opção invalida, tente novamente");
                 break;
         }
 
